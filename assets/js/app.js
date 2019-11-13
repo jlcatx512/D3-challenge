@@ -14,7 +14,6 @@ var height = svgHeight - margin.top - margin.bottom;
 
 // Create an SVG wrapper, append an SVG group that will hold our chart,
 // and shift the latter by left and top margins.
-
 var svg = d3
   .select("#scatter")
   .append("svg")
@@ -26,41 +25,47 @@ var svg = d3
 var chartGroup = svg.append("g")
   .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-// Initial Params
-var chosenXAxis = "poverty"; // poverty
+// Initial Params. Default values x and y axes.
+var chosenXAxis = "poverty";
 var chosenYAxis = "healthcare";
 
-// function used for updating x-scale var upon click on axis label
+// Function used for updating x-scale var upon click on axis label
+// For domain and range, multiply by offset to avoid elements overlapping axes.
 function xScale(censusData, chosenXAxis) {
   // create scales
   var xLinearScale = d3.scaleLinear()
-    .domain([d3.min(censusData, d => d[chosenXAxis]) * 0.95, // give an offset 0.8,
-      d3.max(censusData, d => d[chosenXAxis]) * 1.05 // 1.2
-    ])
+    .domain([d3.min(censusData, d => d[chosenXAxis]) * 0.95,
+      d3.max(censusData, d => d[chosenXAxis]) * 1.05])
     .range([0, width]);
   return xLinearScale;
 }
 
-// function used for updating y-scale var upon click on axis label
+// Function used for updating y-scale var upon click on axis label
+// For domain and range, multiply by offset to avoid elements overlapping axes.
 function yScale(censusData, chosenYAxis) {
   // create scales
   var yLinearScale = d3.scaleLinear()
-    .domain([d3.min(censusData, d => d[chosenYAxis]) * 0.80, // 0.8,
-      d3.max(censusData, d => d[chosenYAxis]) * 1.2 // 1.2
-    ])
+    .domain([d3.min(censusData, d => d[chosenYAxis]) * 0.80,
+      d3.max(censusData, d => d[chosenYAxis]) * 1.2])
     .range([height, 0]); // big difference with x. range is reversed.
   return yLinearScale;
 }
 
-// creatre one for y
-// function used for updating xAxis var upon click on axis label
-function renderAxes(newXScale, xAxis) {
-  var bottomAxis = d3.axisBottom(newXScale);
-//   var leftAxis = d3.axisLeft(newYScale);
-  
+// X AXIS - function used for updating xAxis var upon click on axis label
+// create one for y
+function renderXAxis(newXScale, xAxis) {
+  var bottomAxis = d3.axisBottom(newXScale);  
+
   xAxis.transition()
     .duration(1000)
     .call(bottomAxis);
+
+    return xAxis;
+}
+
+// Y AXIS function used for updating yAxis var upon click on axis label
+function renderYAxis(newYScale, yAxis) {
+  var leftAxis = d3.axisLeft(newYScale);
 
   yAxis.transition()
     .duration(1000)
@@ -69,20 +74,19 @@ function renderAxes(newXScale, xAxis) {
   return xAxis;
 }
 
-// function used for updating circles group with a transition to
+// Function used for updating circles group with a transition to
 // new circles
-function renderCircles(circlesGroup, newXScale, newYScale, chosenXaxis, chosenYAxis) {
+function renderCircles(circlesGroup, newXScale, newYScale, chosenXAxis, chosenYAxis) {
+  // new cy?
+  // need to update function, newYScale and new chosenYaxis.
 
   circlesGroup.transition()
     .duration(1000)
-    .attr("cx", d => newXScale(d[chosenXAxis]));
-    // .attr("cy", d=> newYScale(d[chosenYAxis]))
-    // new cy?
-    // need to update function, newYScale and new chosenYaxis.
+    .attr("cx", d => newXScale(d[chosenXAxis]))
+    .attr("cy", d=> newYScale(d[chosenYAxis]));
 
   return circlesGroup;
 }
-
 
 // function used for updating circles group with new tooltip
 function updateToolTip(chosenXAxis, circlesGroup) {
@@ -94,7 +98,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
         label = "Age (Median):";
     }
     var toolTip = d3.tip()
-        .attr("class", "tooltip")
+        .attr("class", "tooltip d3-tip")
         .offset([80, -60])
         .html(function(d) {
             return (`${d.poverty}<br>${label} ${d[chosenXAxis]}`);
@@ -159,25 +163,6 @@ function updateToolTip(chosenXAxis, circlesGroup) {
         .classed("y-axis", true)
         // .attr("transform", `translate(0, 0)`)
         .call(leftAxis);
-
-    // append initial circles
-    // append a group?
-    /*
-    var circlesGroup = chartGroup.selectAll("circle")
-        .data(censusData)
-        .enter()
-        .append("g")
-        .append("circle")
-        .attr("cx", d => xLinearScale(d[chosenXAxis]))
-        .attr("cy", d => yLinearScale(d[chosenYAxis]))
-        .attr("r", 15)
-        .classed("stateCircle", true)
-        .append("text")
-        .classed("my-text stateText", true)
-        .text(d => d.abbr)
-        .attr("x", d => xLinearScale(d[chosenXAxis]))
-        .attr("y", d => yLinearScale(d[chosenYAxis])+3.8);
-    */
 
     // A group that will group both 1. circle shapes 2. text shapes
     var circlesGroup = chartGroup.selectAll("circle")
@@ -276,7 +261,7 @@ function updateToolTip(chosenXAxis, circlesGroup) {
             xLinearScale = xScale(censusData, chosenXAxis);
 
             // updates x axis with transition
-            xAxis = renderAxes(xLinearScale, xAxis);
+            xAxis = renderXAxis(xLinearScale, xAxis);
 
             // updates circles with new x values
             circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis);
