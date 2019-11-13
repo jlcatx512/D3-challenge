@@ -4,6 +4,7 @@ November 7, 2019
 ## OVERVIEW ##
 * [Project repo](https://github.com/jlcatx512/D3-challenge)
 * [Instructions](https://github.com/the-Coding-Boot-Camp-at-UT/UT-MCB-DATA-PT-07-2019-U-C/tree/master/homework-instructions/16-D3/Instructions)
+* [d3 API Documentation](https://github.com/d3/d3/blob/master/API.md)
 
 ## Debrief ##
 * Needed to literally refresh memory by redoing all videos.
@@ -49,8 +50,9 @@ November 7, 2019
 
 ## Parse the data ##
 * data.csv
+
     |variable| description | notes|
-    |--     |--             | --    |
+    | :---:    | ---             | ---    |
     | `id`  |   |
     | `state`   |   |
     | `abbr`    |   |
@@ -79,6 +81,8 @@ November 7, 2019
 
 ## Data Join ##
 * Definition
+* https://github.com/d3/d3-selection#selection_enter
+> Conceptually, the enter selection’s placeholders are pointers to the parent element (in this example, the document body). The enter selection is typically only used transiently to append elements, and is often merged with the update selection after appending, such that modifications can be applied to both entering and updating elements.
 * [Lynda - D3 subselections](https://www.lynda.com/D3-js-tutorials/Creating-subselections/594451/619558-4.html)
     * How to think about `enter()`. A bit of time travel.
     * Acting on elements that don't exist yet.
@@ -121,6 +125,8 @@ November 7, 2019
 
 ## Tool Tips ##
 * NB DON'T FORGET TO ADD .js to source index.html!
+* >Check out David Gotz's example to see how you should implement tooltips with d3-tip.
+* http://bl.ocks.org/davegotz/bd54b56723c154d25eedde6504d30ad7
 
 ## d3 Axis ##
 * https://github.com/d3/d3-axis
@@ -152,3 +158,12 @@ November 7, 2019
 * tspan --> to add a new line. Do a data join with tspan elements.
 * selectAll("tspan").data(array).enter().append("tspan")
 * https://www.dashingd3js.com/lessons/svg-text-elements
+* https://stackoverflow.com/questions/36954426/adding-label-on-a-d3-scatter-plot-circles
+* https://fcc.fiftykg.com/data-visualization-certification/data-visualization-with-d3/data-visualization-with-d3-add-labels-to-scatter-plot-circles.html
+    * Good simple example.
+    * NB how circle and text are added separately to the `svg` element.
+    * NB how circle and text x-y coordinates are similar.
+    * In my code, I added both circles and text to a group element first.
+    * Other examples:
+        * http://bl.ocks.org/WilliamQLiu/803b712a4d6efbf7bdb4
+        * https://www.freecodecamp.org/forum/t/add-labels-to-scatter-plot-circles/199386    
