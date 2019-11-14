@@ -116,7 +116,12 @@ November 7, 2019
 * https://www.dashingd3js.com/lessons/d3-transition-basics
 
 ## Scatter Plot Examples ##
-* [](https://www.d3-graph-gallery.com/scatter.html)
+* [Scatterplot - d3-graph-gallery](https://www.d3-graph-gallery.com/scatter.html)
+* [D3 Scatterplot Example](http://bl.ocks.org/weiglemc/6185069)
+* https://www.d3-graph-gallery.com/scatter.html
+* [Interactive grouped scatterplot in d3.js](https://www.d3-graph-gallery.com/graph/scatter_grouped_highlight.html)
+* [Update X axis limits on scatterplot](https://www.d3-graph-gallery.com/graph/scatter_buttonXlim.html)
+> This post describes how to update the X axis limit with a smooth transition. When the button on top of the scatter plot is updated, both the axis and circles position are smoothly updated. See more on scatter plot, animation and buttons if needed.
 
 ## Circles and Labels ##
 * https://stackoverflow.com/questions/36954426/adding-label-on-a-d3-scatter-plot-circles
