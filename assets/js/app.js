@@ -1,3 +1,6 @@
+// Jadd Cheng
+// November 13, 2019
+
 // @TODO: YOUR CODE HERE!
 var svgWidth = 960;
 var svgHeight = 500;
@@ -71,21 +74,19 @@ function renderYAxis(newYScale, yAxis) {
     .duration(1000)
     .call(leftAxis);
 
-  return xAxis;
+  return yAxis;
 }
 
 // Function used for updating circles group with a transition to
 // new circles
 // function renderCirclesXAxis(circlesGroup, newXScale, newYScale, chosenXAxis, chosenYAxis) {
-function renderCirclesXAxis(circlesGroup, newXScale, chosenXAxis) {
-  // new cy?
+  // new cy? --> separate renderCircle
   // need to update function, newYScale and new chosenYaxis.
 
+function renderCirclesXAxis(circlesGroup, newXScale, chosenXAxis) {
   circlesGroup.transition()
     .duration(1000)
     .attr("cx", d => newXScale(d[chosenXAxis]))
-    // .attr("cy", d=> newYScale(d[chosenYAxis]));
-
   return circlesGroup;
 }
 
@@ -102,7 +103,7 @@ function renderCirclesYAxis(circlesGroup, newYScale, chosenYAxis) {
   return circlesGroup;
 }
 
-
+//  
 function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
   // var label  = "";
   var xLabel = chosenXAxis;
@@ -267,6 +268,11 @@ return circlesGroup;
     // add chosenYAxis here!
     circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
+  
+    // Update X axis
+    // x.domain([3,xlim])
+    // xAxis.transition().duration(1000).call(d3.axisBottom(x))
+
     // create y labels group
     // x axis labels event listener
     xLabelsGroup.selectAll("text")
@@ -283,18 +289,20 @@ return circlesGroup;
 
             console.log("chosenXAxis is now:" + chosenXAxis)
 
-            // functions here found above csv import
             // updates x scale for new data
             xLinearScale = xScale(censusData, chosenXAxis);
 
             // updates x axis with transition
             xAxis = renderXAxis(xLinearScale, xAxis);
+            // xAxis = renderXAxis(xLinearScale, chosenXAxis); // doesn't work
 
             // updates circles with new x values
             circlesGroup = renderCirclesXAxis(circlesGroup, xLinearScale, chosenXAxis);
+            // circlesGroup = renderCirclesXAxis(circlesGroup, xLinearScale, xAxis);
 
             // updates tooltips with new info
-            circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
+            // circlesGroup = updateToolTip(chosenXAxis, circlesGroup); // works
+            circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup);
 
             // changes classes to change bold text
             // need x and y labels updated too.
@@ -324,8 +332,8 @@ return circlesGroup;
                   .classed("active", false)
                   .classed("inactive", true);
               ageLabel
-                  .classed("active aText", true)
-                  .classed("inactive", false);
+                  .classed("active aText", false)
+                  .classed("inactive", true);
               incomeLabel
                   .classed("active aText", true)
                   .classed("inactive", false);
