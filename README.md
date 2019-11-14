@@ -114,6 +114,8 @@ November 7, 2019
 ## d3 Transitions ##
 * Create a myChart `var`.
 * https://www.dashingd3js.com/lessons/d3-transition-basics
+* [D3 Scatterplot (Animations)](http://bl.ocks.org/WilliamQLiu/bd12f73d0b79d70bfbae)
+    * NB uses version 3.
 
 ## Scatterplot Examples ##
 * [Scatterplot - d3-graph-gallery](https://www.d3-graph-gallery.com/scatter.html)
@@ -174,4 +176,9 @@ November 7, 2019
     * In my code, I added both circles and text to a group element first.
     * Other examples:
         * http://bl.ocks.org/WilliamQLiu/803b712a4d6efbf7bdb4
-        * https://www.freecodecamp.org/forum/t/add-labels-to-scatter-plot-circles/199386    
+        * https://www.freecodecamp.org/forum/t/add-labels-to-scatter-plot-circles/199386  
+
+<hr>
+
+### Changelog ###
+* [2019-11-14 12:35 AM] - `y-axis` transition wasn't working because didn't define `yAxis var`. 
