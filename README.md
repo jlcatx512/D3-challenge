@@ -54,8 +54,8 @@ November 7, 2019
     |variable| description | notes|
     | :---:    | ---             | ---    |
     | `id`  |   |
-    | `state`   |   |
-    | `abbr`    |   |
+    | `state`   | e.g. "California"  |
+    | `abbr`    |  e.g. "CA" |
     | `poverty`     |   |
     | `povertyMoe`  |   |
     | `age`     |   |
